@@ -87,7 +87,8 @@ const typeDefs = `
   type order {
     _id: String
     UserId: String
-    UserName: String 
+    firstName: String 
+    lastName: String 
   }
  
 
@@ -244,18 +245,18 @@ async function orderList() {
   try {
     const orderData = await orders.find();
     
-    const orderListWithUserNames = await Promise.all(orderData.map(async (order) => {
-      const user = await users.findOne({ _id: order.UserId }, { UserName: 1 });
+    // const orderListWithUserNames = await Promise.all(orderData.map(async (order) => {
+    //   const user = await users.findOne({ _id: order.UserId }, { UserName: 1 });
       
-      return {
-        _id: order._id,
-        UserId: order.UserId,
-        UserName: user.UserName,
-        // ... other order fields you want to include
-      };
-    }));
+    //   return {
+    //     _id: order._id,
+    //     UserId: order.UserId,
+    //     UserName: user.UserName,
+    //     // ... other order fields you want to include
+    //   };
+    // }));
     
-    return orderListWithUserNames;
+    return orderData;
   } catch (error) {
     throw new Error('Error fetching orders with user names: ' + error.message);
   }
